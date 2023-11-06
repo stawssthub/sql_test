@@ -31,11 +31,17 @@ jobs:
           fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
 
       - name: Get all changed markdown files
-        id: changed-markdown-files
+        id: changed-sql-files
         uses: tj-actions/changed-files@v40
         with:
           files: |
              **..sql
+
+      - name: List all changed files markdown files
+        run: |
+          for file in ${{ steps.changed-sql-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
 
       - name: Get changed SQL files
         id: changed_files
