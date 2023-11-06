@@ -15,7 +15,7 @@ on:
           -  "prod"
   push:
     branches:
-    -  main
+    -  test
   
 jobs:
   deploy-to-dev:
