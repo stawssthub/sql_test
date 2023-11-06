@@ -30,26 +30,8 @@ jobs:
          id:  changed_files
          run: |
            git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- "*.sql" > changed_files.txt
-         continue-on-error: true
+         continue-on-error: false
          
       - name: Install the SQL client (e.g., MySQL or PostgreSQL)
         run: |
           sqlclient
-
-        env:
-          SQL_USER: ${{ secrets.DB_USER }}
-          SQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          SQL_HOST: ${{ secrets.DB_HOST }}
-          SQL_PORT: ${{ secrets.DB_PORT }}
-          SQL_DATABASE: ${{ secrets.DB_DATABASE }}
-
-      - name: Apply incremental changes
-        run: |
-          while read -r file; do
-            if [ -f "$file" ]; then
-              cat "$file" | your-sql-client-command
-            fi
-          done < changed_files.txt
-
-        env:
-          SQL_CLIENT: ${{ secrets.DB_CLIENT }}
