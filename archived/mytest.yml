@@ -1,0 +1,37 @@
+name: sql_demo
+run-name: Setting up the Hawthorn database
+on:
+  workflow_dispatch:
+    inputs:
+      fail-on:
+        description:  ""
+        required:  true
+        default:  "None"
+        options:
+          -  "None"
+          -  "dev"
+          -  "test"
+          -  "uat"
+          -  "prod"
+  push:
+    branches:
+    -  main
+  
+jobs:
+  deploy-to-dev:
+    runs-on: ubuntu-latest
+    environment:  dev
+    steps:
+    - name: Test Output
+      run: echo "Here is a test"
+  connect-remote:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Show databases
+      run: mysql -h ${{ secrets.DB_HOSTNAME }} --port 3306 -u${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} -e "SHOW DATABASES";
+    - name: Run a sample SQL on remote
+      run: mysql -h ${{ secrets.DB_HOSTNAME }} --port 3306 -u${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} -e "source hawthorn/hawthorn_script.sql";
+  #  - name:  Failing  code
+   #   if:  ${{inputs.fail-on == 'dv'}}
+    #  run: exit 1
