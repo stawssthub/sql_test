@@ -42,7 +42,7 @@ jobs:
 
     - name: Find and execute new SQL lines
       run: |
-          for file in $(git diff --name-only HEAD~1 HEAD -- "*.sql"); do
+          for file in $(git diff --name-only HEAD~1 HEAD -- "**.sql"); do
             if [ -f "$file" ]; then
               changes=$(git diff HEAD~1..HEAD "$file" | grep "^\+" | sed 's/^\+//')
               echo "$changes" | mysql -u$SQL_USER -p$SQL_PASSWORD -h$SQL_HOST -P$SQL_PORT $SQL_DATABASE
