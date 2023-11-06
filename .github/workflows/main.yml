@@ -6,9 +6,9 @@ on:
       fail-on:
         description:  ""
         required:  true
-        default:  "none"
+        default:  "None"
         options:
-          -  "none"
+          -  "None"
           -  "dev"
           -  "test"
           -  "uat"
