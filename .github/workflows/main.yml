@@ -35,7 +35,7 @@ jobs:
         uses: tj-actions/changed-files@v40
         with:
           files: |
-             **..sql
+             **.sql
 
       - name: List all changed files sql files
         run: |
