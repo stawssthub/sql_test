@@ -60,7 +60,7 @@ jobs:
         run: |
           while read -r file; do
             if [ -f "$file" ]; then
-              cat "$file" | mysqlclient -h ${{env.SQL_HOST}} -u ${{ SQL_USER: }} -p"${{ env.SQL_PASSWORD }}" --port 3306 ${{ env.SQL_DATABASE }}
+              cat "$file" | mysqlclient -h ${{env.SQL_HOST}} -u ${{ SQL_USER: }} -p${{ env.SQL_PASSWORD }} --port 3306 ${{ env.SQL_DATABASE }}
             fi
           done < changed_files.txt
 
