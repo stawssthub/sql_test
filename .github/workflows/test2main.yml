@@ -1,4 +1,4 @@
-name: sql_demo23
+name: sql_demo32
 run-name: Setting up the database
 on:
   workflow_dispatch:
