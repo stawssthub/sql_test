@@ -1,5 +1,5 @@
 name: sql_demo
-run-name: Setting up the Hawthorn database
+run-name: Setting up the  database
 on:
   workflow_dispatch:
     inputs:
@@ -51,3 +51,21 @@ jobs:
       - name: Install the SQL client (e.g., MySQL or PostgreSQL)
         run: |
             sudo apt-get install mysql-client
+
+        env:
+          SQL_USER: ${{ secrets.DB_USER }}
+          SQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          SQL_HOST: ${{ secrets.DB_HOST }}
+          SQL_PORT: ${{ secrets.DB_PORT }}
+          SQL_DATABASE: ${{ secrets.DB_DATABASE }}
+
+      - name: Apply incremental changes
+        run: |
+          while read -r file; do
+            if [ -f "$file" ]; then
+              cat "$file" | your-sql-client-command
+            fi
+          done < changed_files.txt
+
+        env:
+          SQL_CLIENT: ${{ secrets.DB_CLIENT }}
