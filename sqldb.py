@@ -1,5 +1,5 @@
 import os
-import mysql-connector-python
+import mysql.connector
 import glob
 
 # Database connection parameters
@@ -12,7 +12,7 @@ db_params = {
 }
 
 # Establish a database connection
-connection = mysql-connector-python.connect(**db_params)
+connection = mysql.connector.connect(**db_params)
 cursor = connection.cursor()
 
 # Directory containing SQL scripts
