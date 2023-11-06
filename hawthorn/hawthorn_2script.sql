@@ -1,4 +1,4 @@
-DROP DATABASE hawthorn2;
+DROP DATABASE hawthorn1;
 
 CREATE DATABASE hawthorn;
 
