@@ -33,6 +33,9 @@ jobs:
       - name: Get all changed sql files
         id: changed-sql-files
         uses: tj-actions/changed-files@v40
+        with:
+          files: |
+             **.sql
         
       - name: List all changed files sql files
         run: |
