@@ -22,11 +22,6 @@ jobs:
     runs-on: ubuntu-latest
     environment:  dev
     steps:
-    - name: Test Output
-      run: echo "Here is a test"
-  connect-remote:
-    runs-on: ubuntu-latest
-    steps:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Install MySQL client
