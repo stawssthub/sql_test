@@ -26,6 +26,13 @@ jobs:
       -  name:  Checkout  code
          uses:  actions/checkout@v2
 
+      - name: Debug Git Diff
+        run: |
+            echo "Before commit: ${{ github.event.before }}"
+            echo "After commit: ${{ github.sha }}"
+            git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- "*.sql" > changed_files.txt
+            cat changed_files.txt
+
       - name: Get changed SQL files
         id: changed_files
         run: |
