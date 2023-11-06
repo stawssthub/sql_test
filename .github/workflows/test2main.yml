@@ -27,11 +27,27 @@ jobs:
   connect-remote:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Show databases
-      run: mysql -h ${{ secrets.DB_HOSTNAME }} --port 3306 -u${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} -e "SHOW DATABASES";
-    - name: Run a sample SQL on remote
-      run: mysql -h ${{ secrets.DB_HOSTNAME }} --port 3306 -u${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} -e "source hawthorn/hawthorn_script.sql";
-  #  - name:  Failing  code
-   #   if:  ${{inputs.fail-on == 'dv'}}
-    #  run: exit 1
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Install MySQL client
+      run: |
+          sudo apt-get update
+          sudo apt-get install mysql-client
+      env:
+          SQL_USER: ${{ secrets.DB_USER }}
+          SQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          SQL_HOST: ${{ secrets.DB_HOST }}
+          SQL_PORT: ${{ secrets.DB_PORT }}
+          SQL_DATABASE: ${{ secrets.DB_DATABASE }}
+
+    - name: Find and execute new SQL lines
+      run: |
+          for file in $(git diff --name-only HEAD~1 HEAD -- "*.sql"); do
+            if [ -f "$file" ]; then
+              changes=$(git diff HEAD~1..HEAD "$file" | grep "^\+" | sed 's/^\+//')
+              echo "$changes" | mysql -u$SQL_USER -p$SQL_PASSWORD -h$SQL_HOST -P$SQL_PORT $SQL_DATABASE
+            fi
+          done
+      env:
+          SQL_CLIENT: ${{ secrets.DB_CLIENT }}
+        
