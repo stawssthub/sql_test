@@ -1,4 +1,4 @@
-name: sql_demo
+name: sql_demo_py
 run-name: Setting up the  database
 on:
   workflow_dispatch:
@@ -15,7 +15,7 @@ on:
           -  "prod"
   push:
     branches:
-    -  main
+    -  test3
   
 jobs:
   deploy-to-dev:
