@@ -25,12 +25,6 @@ jobs:
     steps:
       -  name:  Checkout  code
          uses:  actions/checkout@v2
-
-      -  name:  Get changed SQL files
-         id:  changed_files
-         run: |
-           git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- "*.sql" > changed_files.txt
-         continue-on-error: false
          
       - name: Install the SQL client (e.g., MySQL or PostgreSQL)
         run: |
