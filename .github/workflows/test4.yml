@@ -1,0 +1,50 @@
+name: Incremental SQL Deployment
+run-name: Setting up the  database
+on:
+  workflow_dispatch:
+    inputs:
+      fail-on:
+        description:  ""
+        required:  true
+        default:  "None"
+        options:
+          -  "None"
+          -  "dev"
+          -  "test"
+          -  "uat"
+          -  "prod"
+  push:
+    branches:
+    -  main
+  
+jobs:
+  deploy-to-dev:
+    runs-on: ubuntu-latest
+    environment:  dev
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x  # Replace with the desired Python version
+
+      - name: Install dependencies
+        run: pip install psycopg2 mysql-connector-python  # Install necessary Python libraries
+
+      - name: Deploy SQL Scripts to Databases
+        env:
+          DB_HOST_1: ${{ secrets.DB_HOST_1 }}
+          DB_PORT_1: ${{ secrets.DB_PORT_1 }}
+          DB_NAME_1: ${{ secrets.DB_NAME_1 }}
+          DB_USER_1: ${{ secrets.DB_USER_1 }}
+          DB_PASSWORD_1: ${{ secrets.DB_PASSWORD_1 }}
+          DB_HOST_2: ${{ secrets.DB_HOST_2 }}
+          DB_PORT_2: ${{ secrets.DB_PORT_2 }}
+          DB_NAME_2: ${{ secrets.DB_NAME_2 }}
+          DB_USER_2: ${{ secrets.DB_USER_2 }}
+          DB_PASSWORD_2: ${{ secrets.DB_PASSWORD_2 }}
+          # Add more database secrets as needed
+        run: python your-deployment-script.py
