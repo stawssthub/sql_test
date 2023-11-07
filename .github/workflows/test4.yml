@@ -37,7 +37,7 @@ jobs:
       - name: Deploy SQL Scripts to Databases
         env:
           DB_HOST_1: ${{ secrets.DB_HOST_1 }}
-          DB_PORT_1: ${{ secrets.DB_PORT_1 }}
+          #DB_PORT_1: ${{ secrets.DB_PORT_1 }}
           DB_NAME_1: ${{ secrets.DB_NAME_1 }}
           DB_USER_1: ${{ secrets.DB_USER_1 }}
           DB_PASSWORD_1: ${{ secrets.DB_PASSWORD_1 }}
