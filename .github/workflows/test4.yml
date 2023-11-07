@@ -1,4 +1,4 @@
-name: Incremental SQL Deployment
+name: Incremental SQL Deployment2
 run-name: Setting up the  database
 on:
   workflow_dispatch:
@@ -32,7 +32,7 @@ jobs:
           python-version: 3.x  # Replace with the desired Python version
 
       - name: Install dependencies
-        run: pip install psycopg2 mysql-connector-python  # Install necessary Python libraries
+        run: pip install  mysql-connector-python  # Install necessary Python libraries
 
       - name: Deploy SQL Scripts to Databases
         env:
@@ -47,4 +47,4 @@ jobs:
           DB_USER_2: ${{ secrets.DB_USER_2 }}
           DB_PASSWORD_2: ${{ secrets.DB_PASSWORD_2 }}
           # Add more database secrets as needed
-        run: python your-deployment-script.py
+        run: python sqldb.py
